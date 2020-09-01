@@ -1,48 +1,42 @@
+// import {uuid} from '@loopback/core';
 import {Entity, model, property} from '@loopback/repository';
-import {uuid} from '@loopback/core';
-
 @model({name: 'users', settings: {strict: false}})
 export class User extends Entity {
   @property({
-    type: 'string',
+    type: 'number',
     id: true,
     generated: true,
-    useDefaultIdType: false,
-    default: () => uuid(),
-    postgresql: {
-      dataType: 'uuid'
-    }
   })
-  user_id?: string;
+  user_id?: number;
 
   @property({
-    type: 'string'
+    type: 'string',
   })
   firstname?: string;
 
   @property({
-    type: 'string'
+    type: 'string',
   })
   lastname: string;
 
   @property({
-    type: 'string'
+    type: 'string',
   })
   email: string;
 
   @property({
     type: 'boolean',
-    default: 'Y'
+    default: 'Y',
   })
   active?: boolean;
 
   @property({
-    type: 'string'
+    type: 'string',
   })
   password?: string;
 
   @property({
-    type: 'object'
+    type: 'object',
   })
   properties?: object;
 
@@ -50,9 +44,3 @@ export class User extends Entity {
     super(data);
   }
 }
-
-export interface UserRelations {
-  // describe navigational properties here
-}
-
-export type UserWithRelations = User & UserRelations;

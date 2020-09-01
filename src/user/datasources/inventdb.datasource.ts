@@ -1,6 +1,6 @@
 import {inject} from '@loopback/core';
 import {juggler} from '@loopback/repository';
-export class InventorydbDataSource extends juggler.DataSource {
+export class InventDbDataSource extends juggler.DataSource {
   static dataSourceName = 'inventdb';
 
   constructor(
@@ -27,12 +27,12 @@ export class InventorydbDataSource extends juggler.DataSource {
       // idleTimeoutMillis: ReadProperties.getDBIdealTimeoutMillis(),
       // connectionTimeoutMillis: ReadProperties.getDBConnectionTimeoutMillis(),
 
-//      host: 'veloxdev.cc3echcrqjmr.us-east-1.rds.amazonaws.com',
+      // host: 'veloxdev.cc3echcrqjmr.us-east-1.rds.amazonaws.com',
       // host: 'localhost',
       // port: 5432,
       // user: 'postgres',
-      // password: '',
-      // database: 'plinventdb',
+      // password: 'admin',
+      // database: 'velox',
     },
   ) {
     console.log('dsConfig :' + dsConfig);
