@@ -40,29 +40,25 @@ export class InventoryApiApplication extends BootMixin(
     // Customize @loopback/boot Booter Conventions here
     this.bootOptions = {
       controllers: {
-        // Customize ControllerBooter Conventions here
-        dirs: ['user'],
+        dirs: ['user','product'],
         extensions: ['.controller.js'],
         nested: true,
       },
       datasources: {
-        // Customize ControllerBooter Conventions here
         dirs: ['user'],
         extensions: ['.datasource.js'],
         nested: true,
       },
       models: {
-        // Customize ControllerBooter Conventions here
         dirs: [
-          'user',
+          'user','product'
         ],
         extensions: ['.model.js'],
         nested: true,
       },
       repositories: {
-        // Customize ControllerBooter Conventions here
         dirs: [
-          'user',
+          'user','product'
         ],
         extensions: ['.repository.js'],
         nested: true,
