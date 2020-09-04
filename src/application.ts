@@ -40,7 +40,7 @@ export class InventoryApiApplication extends BootMixin(
     // Customize @loopback/boot Booter Conventions here
     this.bootOptions = {
       controllers: {
-        dirs: ['user','product','role'],
+        dirs: ['user','product','role','reference'],
         extensions: ['.controller.js'],
         nested: true,
       },
@@ -51,14 +51,14 @@ export class InventoryApiApplication extends BootMixin(
       },
       models: {
         dirs: [
-          'user','product','role'
+          'user','product','role','reference'
         ],
         extensions: ['.model.js'],
         nested: true,
       },
       repositories: {
         dirs: [
-          'user','product','role'
+          'user','product','role','reference'
         ],
         extensions: ['.repository.js'],
         nested: true,

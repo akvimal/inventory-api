@@ -1,8 +1,28 @@
 // import {uuid} from '@loopback/core';
-import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Entity, model, property, hasMany, hasOne} from '@loopback/repository';
+import { UserRole } from './userRole.model ';
 import { Role } from '../../role/models';
-import { UserRole } from './userrole.model';
-@model({name: 'users', settings: {strict: false}})
+@model({name: 'users', settings:{
+
+"relations": {
+  "users": {
+    "type":"belongsTo",
+    "model": "users",
+    "foreignKey": "user_id",
+    "primaryKey": "user_id"
+  }
+},
+
+"foreignKeys": {
+  "user_id": {
+    "name": "user_id_too_users",
+    "foreignKey": "user_id",
+    "entityKey": "id",
+    "entity": "user_roles"
+  }
+}
+}
+})
 export class User extends Entity {
   @property({
     type: 'number',
@@ -42,7 +62,7 @@ export class User extends Entity {
   })
   properties?: object;
 
-  @hasMany(() => Role, {through: {model: () => UserRole}})
+  @hasMany(() => Role, {keyTo:'user_id'})
   roles: Role[];
 
   constructor(data?: Partial<User>) {
