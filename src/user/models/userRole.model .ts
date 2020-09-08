@@ -1,9 +1,11 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Entity, model, property, hasMany, belongsTo} from '@loopback/repository';
 import { User } from './user.model';
 import { Role } from '../../role/models';
 
 
-@model({name: 'user_roles', settings: {strict: false}})
+@model({name: 'user_roles', 
+// settings: {strict: false}
+})
 export class UserRole extends Entity {
   
   @property({
@@ -20,13 +22,21 @@ export class UserRole extends Entity {
   @property({
     type: 'number',
   })
+  // @belongsTo(() => User)
   user_id?: number;
 
    @hasMany(() => Role, {through: {model: () => UserRole}})
   users: User[];
+  User_roles:UserRole[];
 
   constructor(data?: Partial<UserRole>) {
     super(data);
   }
   
 }
+
+export interface UserRoleRelations {
+  customer?: UserRoleWithRelations;
+}
+
+export type UserRoleWithRelations = UserRole & UserRoleRelations;

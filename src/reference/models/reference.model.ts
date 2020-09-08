@@ -2,7 +2,9 @@
 import {Entity, model, property, } from '@loopback/repository';
 
 
-@model({name: 'references', settings: {strict: false}})
+@model({name: 'references', 
+// settings: {strict: false}
+})
 export class Reference extends Entity {
   @property({
     type: 'number',

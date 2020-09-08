@@ -1,6 +1,26 @@
 // import {uuid} from '@loopback/core';
-import {Entity, model, property} from '@loopback/repository';
-@model({name: 'products', settings: {strict: false}})
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import { ProductLifeCycle } from './productLifecycle.model';
+@model({name: 'products',
+//  settings: {strict: false}
+
+//  settings: {relations: {
+//   "products": {
+//     "type":"belongsTo",
+//     "model": "products",
+//     "foreignKey": "product_id",
+//     "primaryKey": "product_id"
+//   }
+// },
+// foreignKeys: {
+//   name: 'user_id_too_users',
+//   entity: 'productlifecycle',
+//   entityKey: 'product_id',
+//   foreignKey: 'product_id'
+
+// }
+// } 
+})
 export class Product extends Entity {
   @property({
     type: 'number',
@@ -34,6 +54,10 @@ export class Product extends Entity {
     type: 'object',
   })
   properties?: object;
+
+  @hasMany(()=>ProductLifeCycle, {keyTo:'product_id'})
+  ProductLifeCycles: ProductLifeCycle[];
+  
 
   constructor(data?: Partial<Product>) {
     super(data);
