@@ -1,7 +1,8 @@
 // import {uuid} from '@loopback/core';
 import {Entity, model, property, hasMany} from '@loopback/repository';
 import { ProductLifeCycle } from './productLifecycle.model';
-@model({name: 'products',
+import { group } from 'console';
+// @model({name: 'products',
 //  settings: {strict: false}
 
 //  settings: {relations: {
@@ -20,6 +21,9 @@ import { ProductLifeCycle } from './productLifecycle.model';
 
 // }
 // } 
+// })
+@model({
+  settings: { postgresql: { schema: 'public', table: 'products'} },
 })
 export class Product extends Entity {
   @property({
@@ -45,18 +49,20 @@ export class Product extends Entity {
   status: string;
 
   @property({
-    type: 'boolean',
-    default: 'Y',
+    type: 'string',
+    postgresql: {
+      dataType: 'boolean',
+    },
   })
-  active?: boolean;
+  active?: string;
 
   @property({
     type: 'object',
   })
-  properties?: object;
+  properties?: object;  //json file
 
-  @hasMany(()=>ProductLifeCycle, {keyTo:'product_id'})
-  ProductLifeCycles: ProductLifeCycle[];
+  // @hasMany(()=>ProductLifeCycle, {keyTo:'product_id'})
+  // ProductLifeCycles: ProductLifeCycle[];
   
 
   constructor(data?: Partial<Product>) {

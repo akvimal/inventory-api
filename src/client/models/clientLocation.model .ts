@@ -13,6 +13,10 @@ export class ClientLocation extends Entity {
     generated: true,
   })
   id?: number;
+  @property({
+    type: 'string',
+  })
+  device_name?: string;
 
   @property({
     type: 'number',
