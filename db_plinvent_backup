@@ -1,0 +1,902 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.3
+-- Dumped by pg_dump version 12.3
+
+-- Started on 2020-10-10 08:09:19
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 207 (class 1259 OID 57528)
+-- Name: client_locations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.client_locations (
+    id integer NOT NULL,
+    location_id integer,
+    client_id integer
+);
+
+
+ALTER TABLE public.client_locations OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 57526)
+-- Name: client_locations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.client_locations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.client_locations_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2935 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: client_locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.client_locations_id_seq OWNED BY public.client_locations.id;
+
+
+--
+-- TOC entry 205 (class 1259 OID 57505)
+-- Name: clients; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.clients (
+    id integer NOT NULL,
+    active text,
+    type character varying(45),
+    name character varying(45)
+);
+
+
+ALTER TABLE public.clients OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 57503)
+-- Name: clients_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.clients_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.clients_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2936 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: clients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.clients_id_seq OWNED BY public.clients.id;
+
+
+--
+-- TOC entry 209 (class 1259 OID 57547)
+-- Name: locations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.locations (
+    id integer NOT NULL,
+    name text,
+    active boolean DEFAULT true
+);
+
+
+ALTER TABLE public.locations OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1259 OID 57545)
+-- Name: locations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.locations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.locations_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2937 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.locations_id_seq OWNED BY public.locations.id;
+
+
+--
+-- TOC entry 219 (class 1259 OID 57716)
+-- Name: productlifecycle; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.productlifecycle (
+    id integer NOT NULL,
+    status text,
+    product_id integer NOT NULL,
+    location_id integer NOT NULL,
+    client_id integer NOT NULL,
+    start_date date,
+    end_date date
+);
+
+
+ALTER TABLE public.productlifecycle OWNER TO postgres;
+
+--
+-- TOC entry 218 (class 1259 OID 57714)
+-- Name: productlifecycle_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.productlifecycle_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.productlifecycle_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2938 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: productlifecycle_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.productlifecycle_id_seq OWNED BY public.productlifecycle.id;
+
+
+--
+-- TOC entry 211 (class 1259 OID 57570)
+-- Name: products; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.products (
+    product_id integer NOT NULL,
+    product_type text,
+    name text,
+    status text,
+    active boolean DEFAULT true,
+    properties text
+);
+
+
+ALTER TABLE public.products OWNER TO postgres;
+
+--
+-- TOC entry 210 (class 1259 OID 57568)
+-- Name: products_product_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.products_product_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.products_product_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2939 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: products_product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.products_product_id_seq OWNED BY public.products.product_id;
+
+
+--
+-- TOC entry 213 (class 1259 OID 57593)
+-- Name: references; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."references" (
+    reference_id integer NOT NULL,
+    category text,
+    name text,
+    active text
+);
+
+
+ALTER TABLE public."references" OWNER TO postgres;
+
+--
+-- TOC entry 212 (class 1259 OID 57591)
+-- Name: references_reference_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.references_reference_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.references_reference_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2940 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: references_reference_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.references_reference_id_seq OWNED BY public."references".reference_id;
+
+
+--
+-- TOC entry 215 (class 1259 OID 57615)
+-- Name: roles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.roles (
+    role_id integer NOT NULL,
+    name text,
+    permissions text
+);
+
+
+ALTER TABLE public.roles OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1259 OID 57613)
+-- Name: roles_role_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.roles_role_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.roles_role_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2941 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: roles_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.roles_role_id_seq OWNED BY public.roles.role_id;
+
+
+--
+-- TOC entry 217 (class 1259 OID 57637)
+-- Name: user_roles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.user_roles (
+    id integer NOT NULL,
+    role_id integer,
+    user_id integer
+);
+
+
+ALTER TABLE public.user_roles OWNER TO postgres;
+
+--
+-- TOC entry 216 (class 1259 OID 57635)
+-- Name: user_roles_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.user_roles_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.user_roles_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2942 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: user_roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.user_roles_id_seq OWNED BY public.user_roles.id;
+
+
+--
+-- TOC entry 203 (class 1259 OID 57462)
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    user_id integer NOT NULL,
+    firstname text,
+    lastname text,
+    email text,
+    active boolean DEFAULT true,
+    password text,
+    properties text
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 57460)
+-- Name: users_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_user_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_user_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2943 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_user_id_seq OWNED BY public.users.user_id;
+
+
+--
+-- TOC entry 2746 (class 2604 OID 57531)
+-- Name: client_locations id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.client_locations ALTER COLUMN id SET DEFAULT nextval('public.client_locations_id_seq'::regclass);
+
+
+--
+-- TOC entry 2745 (class 2604 OID 57508)
+-- Name: clients id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.clients ALTER COLUMN id SET DEFAULT nextval('public.clients_id_seq'::regclass);
+
+
+--
+-- TOC entry 2747 (class 2604 OID 57550)
+-- Name: locations id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.locations ALTER COLUMN id SET DEFAULT nextval('public.locations_id_seq'::regclass);
+
+
+--
+-- TOC entry 2754 (class 2604 OID 57719)
+-- Name: productlifecycle id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.productlifecycle ALTER COLUMN id SET DEFAULT nextval('public.productlifecycle_id_seq'::regclass);
+
+
+--
+-- TOC entry 2749 (class 2604 OID 57573)
+-- Name: products product_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.products ALTER COLUMN product_id SET DEFAULT nextval('public.products_product_id_seq'::regclass);
+
+
+--
+-- TOC entry 2751 (class 2604 OID 57596)
+-- Name: references reference_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."references" ALTER COLUMN reference_id SET DEFAULT nextval('public.references_reference_id_seq'::regclass);
+
+
+--
+-- TOC entry 2752 (class 2604 OID 57618)
+-- Name: roles role_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.roles ALTER COLUMN role_id SET DEFAULT nextval('public.roles_role_id_seq'::regclass);
+
+
+--
+-- TOC entry 2753 (class 2604 OID 57640)
+-- Name: user_roles id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_roles ALTER COLUMN id SET DEFAULT nextval('public.user_roles_id_seq'::regclass);
+
+
+--
+-- TOC entry 2743 (class 2604 OID 57465)
+-- Name: users user_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.users_user_id_seq'::regclass);
+
+
+--
+-- TOC entry 2917 (class 0 OID 57528)
+-- Dependencies: 207
+-- Data for Name: client_locations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.client_locations (id, location_id, client_id) FROM stdin;
+1	1	1
+2	202	102
+3	203	103
+4	204	104
+5	205	105
+6	206	106
+7	207	107
+8	208	108
+9	209	109
+10	210	110
+11	211	111
+12	212	112
+\.
+
+
+--
+-- TOC entry 2915 (class 0 OID 57505)
+-- Dependencies: 205
+-- Data for Name: clients; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.clients (id, active, type, name) FROM stdin;
+1	\N	\N	\N
+101	y	installed	company1
+102	y	available	company2
+103	y	repair	company3
+104	y	repair	company4
+105	y	decomisioned	company5
+106	n	installed	company6
+107	n	installed	company7
+108	n	decomissioned	company8
+109	n	available	company9
+110	n	available	company10
+111	y	installed	company11
+112	n	installed	company12
+\.
+
+
+--
+-- TOC entry 2919 (class 0 OID 57547)
+-- Dependencies: 209
+-- Data for Name: locations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.locations (id, name, active) FROM stdin;
+1	roja	t
+201	beavercreek	t
+202	beavercerk	t
+203	cinicilli	t
+204	lousiiville	t
+205	lorain	t
+206	marengo	f
+207	paris	f
+208	kashmir	f
+209	ladak	f
+210	delhi	f
+211	mumbai	t
+212	cochin	f
+\.
+
+
+--
+-- TOC entry 2929 (class 0 OID 57716)
+-- Dependencies: 219
+-- Data for Name: productlifecycle; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.productlifecycle (id, status, product_id, location_id, client_id, start_date, end_date) FROM stdin;
+1	intalled	1	201	101	2019-10-23	2020-12-31
+2	available	2	202	102	2018-11-13	2020-09-09
+3	repair	3	203	103	2018-06-01	2020-08-08
+4	repair	4	204	104	2019-06-01	2019-08-08
+5	decomissioned	5	205	105	2019-07-12	2020-08-18
+6	installed	6	206	106	2017-06-01	2020-08-08
+7	installed	7	207	107	2017-06-01	2020-08-08
+8	decomissioned	8	208	108	2019-07-12	2020-08-18
+9	available	9	209	109	2019-07-12	2020-08-18
+10	available	10	210	110	2019-07-12	2020-08-18
+11	installed	11	211	111	2019-07-12	2020-08-18
+12	repair	12	212	112	2018-06-01	2020-08-08
+\.
+
+
+--
+-- TOC entry 2921 (class 0 OID 57570)
+-- Dependencies: 211
+-- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.products (product_id, product_type, name, status, active, properties) FROM stdin;
+111	baconbit	baconbit	available	t	not defined
+112	baconbit	baconbit	available	t	not defined
+113	Rasberry-pig	Rasberry-pig	installed	t	not defined
+114	Rasberry-pig	Rasberry-pig	installed	t	not defined
+115	Rasberry-pig	Rasberry-pig	available	t	not defined
+116	baconbit	baconbit	available	t	not defined
+1	Baconbit	Baconbit	Available	t	
+2	Baconbit	Baconbit	Available	t	
+3	Baconbit	Baconbit	Available	t	
+4	Rasberry_pig	Rasberry_pig	Available	t	
+5	Rasberry_pig	Rasberry_pig	Available	t	
+6	Rasberry_pig	Rasberry_pig	Available	t	
+7	Baconbit	Baconbit	Installed	t	
+8	Baconbit	Baconbit	Installed	t	
+9	Baconbit	Baconbit	Installed	t	
+10	Rasberry_pig	Rasberry_pig	Installed	t	
+11	Rasberry_pig	Rasberry_pig	Installed	t	
+12	Rasberry_pig	Rasberry_pig	Installed	t	
+\.
+
+
+--
+-- TOC entry 2923 (class 0 OID 57593)
+-- Dependencies: 213
+-- Data for Name: references; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."references" (reference_id, category, name, active) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2925 (class 0 OID 57615)
+-- Dependencies: 215
+-- Data for Name: roles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.roles (role_id, name, permissions) FROM stdin;
+1	roja	not defined
+\.
+
+
+--
+-- TOC entry 2927 (class 0 OID 57637)
+-- Dependencies: 217
+-- Data for Name: user_roles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.user_roles (id, role_id, user_id) FROM stdin;
+1	1	3
+\.
+
+
+--
+-- TOC entry 2913 (class 0 OID 57462)
+-- Dependencies: 203
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users (user_id, firstname, lastname, email, active, password, properties) FROM stdin;
+1	\N	\N	\N	t	\N	\N
+3	roja	siva	rojasiva@gmail.com	t	roja	client
+\.
+
+
+--
+-- TOC entry 2944 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: client_locations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.client_locations_id_seq', 1, false);
+
+
+--
+-- TOC entry 2945 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: clients_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.clients_id_seq', 1, true);
+
+
+--
+-- TOC entry 2946 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: locations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.locations_id_seq', 1, false);
+
+
+--
+-- TOC entry 2947 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: productlifecycle_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.productlifecycle_id_seq', 1, false);
+
+
+--
+-- TOC entry 2948 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: products_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.products_product_id_seq', 1, false);
+
+
+--
+-- TOC entry 2949 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: references_reference_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.references_reference_id_seq', 1, false);
+
+
+--
+-- TOC entry 2950 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: roles_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.roles_role_id_seq', 1, false);
+
+
+--
+-- TOC entry 2951 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: user_roles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.user_roles_id_seq', 1, false);
+
+
+--
+-- TOC entry 2952 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_user_id_seq', 1, true);
+
+
+--
+-- TOC entry 2760 (class 2606 OID 57533)
+-- Name: client_locations client_locations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.client_locations
+    ADD CONSTRAINT client_locations_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2758 (class 2606 OID 57514)
+-- Name: clients clients_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.clients
+    ADD CONSTRAINT clients_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2764 (class 2606 OID 57556)
+-- Name: locations locations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.locations
+    ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2777 (class 2606 OID 57724)
+-- Name: productlifecycle productlifecycle_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.productlifecycle
+    ADD CONSTRAINT productlifecycle_pkey PRIMARY KEY (id, product_id, location_id, client_id);
+
+
+--
+-- TOC entry 2766 (class 2606 OID 57579)
+-- Name: products products_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT products_pkey PRIMARY KEY (product_id);
+
+
+--
+-- TOC entry 2768 (class 2606 OID 57601)
+-- Name: references references_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."references"
+    ADD CONSTRAINT references_pkey PRIMARY KEY (reference_id);
+
+
+--
+-- TOC entry 2770 (class 2606 OID 57623)
+-- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.roles
+    ADD CONSTRAINT roles_pkey PRIMARY KEY (role_id);
+
+
+--
+-- TOC entry 2772 (class 2606 OID 57666)
+-- Name: user_roles user_roles_id; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_roles
+    ADD CONSTRAINT user_roles_id PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2756 (class 2606 OID 57471)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
+
+
+--
+-- TOC entry 2761 (class 1259 OID 81963)
+-- Name: fki_client_fk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_client_fk ON public.client_locations USING btree (client_id);
+
+
+--
+-- TOC entry 2773 (class 1259 OID 73800)
+-- Name: fki_fk_client_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_fk_client_id ON public.productlifecycle USING btree (client_id);
+
+
+--
+-- TOC entry 2774 (class 1259 OID 73794)
+-- Name: fki_fk_location_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_fk_location_id ON public.productlifecycle USING btree (id);
+
+
+--
+-- TOC entry 2775 (class 1259 OID 73816)
+-- Name: fki_fk_location_ids; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_fk_location_ids ON public.productlifecycle USING btree (location_id);
+
+
+--
+-- TOC entry 2762 (class 1259 OID 81969)
+-- Name: fki_location_fk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_location_fk ON public.client_locations USING btree (location_id);
+
+
+--
+-- TOC entry 2778 (class 2606 OID 81958)
+-- Name: client_locations client_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.client_locations
+    ADD CONSTRAINT client_fk FOREIGN KEY (client_id) REFERENCES public.clients(id);
+
+
+--
+-- TOC entry 2784 (class 2606 OID 73806)
+-- Name: productlifecycle fk_client_ids; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.productlifecycle
+    ADD CONSTRAINT fk_client_ids FOREIGN KEY (client_id) REFERENCES public.clients(id);
+
+
+--
+-- TOC entry 2783 (class 2606 OID 73801)
+-- Name: productlifecycle fk_location_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.productlifecycle
+    ADD CONSTRAINT fk_location_id FOREIGN KEY (location_id) REFERENCES public.locations(id) NOT VALID;
+
+
+--
+-- TOC entry 2785 (class 2606 OID 73811)
+-- Name: productlifecycle fk_location_ids; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.productlifecycle
+    ADD CONSTRAINT fk_location_ids FOREIGN KEY (location_id) REFERENCES public.locations(id);
+
+
+--
+-- TOC entry 2782 (class 2606 OID 57725)
+-- Name: productlifecycle fk_pdtlfc_prod; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.productlifecycle
+    ADD CONSTRAINT fk_pdtlfc_prod FOREIGN KEY (product_id) REFERENCES public.products(product_id);
+
+
+--
+-- TOC entry 2780 (class 2606 OID 73769)
+-- Name: user_roles fk_userRole_user_id_too_users; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_roles
+    ADD CONSTRAINT "fk_userRole_user_id_too_users" FOREIGN KEY (id) REFERENCES public.users(user_id);
+
+
+--
+-- TOC entry 2779 (class 2606 OID 81964)
+-- Name: client_locations location_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.client_locations
+    ADD CONSTRAINT location_fk FOREIGN KEY (location_id) REFERENCES public.locations(id);
+
+
+--
+-- TOC entry 2781 (class 2606 OID 73774)
+-- Name: user_roles userrole_role_id_too_users; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_roles
+    ADD CONSTRAINT userrole_role_id_too_users FOREIGN KEY (id) REFERENCES public.roles(role_id);
+
+
+-- Completed on 2020-10-10 08:09:19
+
+--
+-- PostgreSQL database dump complete
+--
+
