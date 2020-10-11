@@ -14,20 +14,22 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {Product} from '../models';
-import {ProductRepository} from '../repositories';
+import { ClientLocation } from '../models/clientLocation.model ';
+import { ClientLocationRepository } from '../repositories/clientLocation.repository';
 
-export class ProductController {
+
+
+export class ClientController {
   constructor(
-    @repository(ProductRepository)
-    public productRepository: ProductRepository,
+    @repository(ClientLocationRepository)
+    public clientRepository: ClientLocationRepository,
   ) {}
 
-  @post('/products', {
+  @post('/clients', {
     responses: {
       '200': {
-        description: 'Product model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Product)}},
+        description: 'User model instance',
+        content: {'application/json': {schema: getModelSchemaRef(ClientLocation)}},
       },
     },
   })
@@ -35,43 +37,40 @@ export class ProductController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Product, {
-            exclude: ['product_id'],
+          schema: getModelSchemaRef(ClientLocation, {
+            exclude: ['id'],
           }),
         },
       },
     })
-    product: Omit<Product, 'product_id'>,
-  ): Promise<Product> {
-    return this.productRepository.create(product);
+    user: Omit<ClientLocation, 'id'>,
+  ): Promise<ClientLocation> {
+    return this.clientRepository.create(user);
   }
-  // /api/products?filter[where][id]=1
 
-  @get('/products/count',
-   {
+  @get('/clientslocation/count', {
     responses: {
       '200': {
-        description: 'Products model count',
+        description: 'Users model count',
         content: {'application/json': {schema: CountSchema}},
       },
     },
   })
   async count(
-    @param.query.object('where', getWhereSchemaFor(Product)) where?: Where,
+    @param.query.object('where', getWhereSchemaFor(ClientLocation)) where?: Where,
   ): Promise<Count> {
-    return this.productRepository.count(where);
+    return this.clientRepository.count(where);
   }
 
-  // Account.find({where: {product_type: 'Baconbit'}, }, function(err, accounts) { /* ... */ });
-  @get('/products', {
+  @get('/clientslocation', {
     responses: {
       '200': {
-        description: 'Array of Products model instances',
+        description: 'Array of Users model instances',
         content: {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Product, {includeRelations: true}),
+              items: getModelSchemaRef(ClientLocation, {includeRelations: true}),
             },
           },
         },
@@ -79,10 +78,10 @@ export class ProductController {
     },
   })
   async find(
-    @param.query.object('filter', getFilterSchemaFor(Product))
+    @param.query.object('filter', getFilterSchemaFor(ClientLocation))
     filter?: Filter,
-  ): Promise<Product[]> {
-    return this.productRepository.find(filter);
+  ): Promise<ClientLocation[]> {
+    return this.clientRepository.find(filter);
   }
   // @patch('/plugins', {
   //   responses: {

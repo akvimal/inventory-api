@@ -33,6 +33,7 @@ export class Product extends Entity {
   })
   product_id?: number;
 
+  
   @property({
     type: 'string',
   })
@@ -64,6 +65,13 @@ export class Product extends Entity {
   // @hasMany(()=>ProductLifeCycle, {keyTo:'product_id'})
   // ProductLifeCycles: ProductLifeCycle[];
   
+  // product.repository.find({
+  //   where: {
+  //     product_type.status: 'Installed',
+  //   },
+  //   menu: 'product_type.status',
+  // });
+
 
   constructor(data?: Partial<Product>) {
     super(data);

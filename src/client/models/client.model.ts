@@ -12,23 +12,21 @@ export class Client extends Entity {
   id?: number;
 
   @property({
-    type: 'string',
+    type: 'boolean',
+    default: 'Y',
   })
-  customer_name?: string;
-  @property({
-    type: 'string',
-  })
-  location?: string;
+  active?: boolean;
 
-  @property({
-    type: 'string',
-  })
-  status?: string;
+ @property({
+  type: 'string',
+})
+type?: string;
 
-  @property({
-    type: 'string',
-  })
-  count?: string;
+ @property({
+  type: 'string',
+})
+name?: string;
+
 
   @hasMany(() => Client, {keyTo:'client_id'})
   client_locations: ClientLocation[];

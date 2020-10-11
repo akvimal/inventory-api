@@ -14,11 +14,6 @@ export class ClientLocation extends Entity {
   })
   id?: number;
   @property({
-    type: 'string',
-  })
-  device_name?: string;
-
-  @property({
     type: 'number',
   })
   location_id?: number;

@@ -14,20 +14,21 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {Product} from '../models';
-import {ProductRepository} from '../repositories';
+import { ProductLifeCycle } from '../models/productLifecycle.model';
+import { ProductLifeCycleRepository } from '../repositories/productLifecycle.repository';
 
-export class ProductController {
+
+export class ProductLifecycleController {
   constructor(
-    @repository(ProductRepository)
-    public productRepository: ProductRepository,
+    @repository(ProductLifeCycle)
+    public productRepository: ProductLifeCycleRepository,
   ) {}
 
   @post('/products', {
     responses: {
       '200': {
         description: 'Product model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Product)}},
+        content: {'application/json': {schema: getModelSchemaRef(ProductLifeCycle)}},
       },
     },
   })
@@ -35,14 +36,14 @@ export class ProductController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Product, {
+          schema: getModelSchemaRef(ProductLifeCycle, {
             exclude: ['product_id'],
           }),
         },
       },
     })
-    product: Omit<Product, 'product_id'>,
-  ): Promise<Product> {
+    product: Omit<ProductLifeCycle, 'product_id'>,
+  ): Promise<ProductLifeCycle> {
     return this.productRepository.create(product);
   }
   // /api/products?filter[where][id]=1
@@ -57,7 +58,7 @@ export class ProductController {
     },
   })
   async count(
-    @param.query.object('where', getWhereSchemaFor(Product)) where?: Where,
+    @param.query.object('where', getWhereSchemaFor(ProductLifeCycle)) where?: Where,
   ): Promise<Count> {
     return this.productRepository.count(where);
   }
@@ -71,7 +72,7 @@ export class ProductController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Product, {includeRelations: true}),
+              items: getModelSchemaRef(ProductLifeCycle, {includeRelations: true}),
             },
           },
         },
@@ -79,9 +80,9 @@ export class ProductController {
     },
   })
   async find(
-    @param.query.object('filter', getFilterSchemaFor(Product))
+    @param.query.object('filter', getFilterSchemaFor(ProductLifeCycle))
     filter?: Filter,
-  ): Promise<Product[]> {
+  ): Promise<ProductLifeCycle[]> {
     return this.productRepository.find(filter);
   }
   // @patch('/plugins', {
